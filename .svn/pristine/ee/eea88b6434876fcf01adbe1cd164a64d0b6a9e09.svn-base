@@ -1,0 +1,7 @@
+# primitive types for kmelia  (sets and arrays are hard coded)
+# KMLTYPE optional @ java class which should later in the refinement 
+# provide an instance static field for the root primitive type 
+# a factory method for complex types #(under refactoring)
+# then standard type definition. if name = type then it's a primitive type
+#
+KMLTYPE RunningMode :: enum {leader,follower,solo,idle}

@@ -1,0 +1,29 @@
+COMPONENT IntegerMock
+
+INTERFACE  
+  provides : {intdata}
+  config : {conf}
+USES {PLATOONTESTLIB}
+VARIABLES  
+  dataname:String;
+ 
+  
+  
+SERVICES 
+
+provided conf(dname:String)
+ Sequence { 
+ dataname:=dname
+} 
+End
+
+########### provided services 
+
+provided intdata():Integer
+Sequence{
+SendResult(getData(dataname))
+}
+End
+
+
+END_SERVICES

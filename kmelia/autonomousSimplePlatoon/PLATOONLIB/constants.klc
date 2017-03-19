@@ -1,0 +1,8 @@
+LIBRARY_CONSTANTS
+obs maxSpeed: Integer:=130;
+obs maxAccel: Integer:=100;
+obs minAccel: Integer:=-1;
+obs alertDistance : Integer := 3;
+obs idealDistance : Integer := 5;
+obs distanceStep : Integer := 10;
+

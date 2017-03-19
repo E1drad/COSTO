@@ -1,0 +1,32 @@
+APPLICATION PlatoonSystem_TA1
+#Costo generated test environement for PlatoonSystem
+
+INTERFACE
+  #provides: {}
+  #requires: {}
+  #config: {} 
+  #autorun: {} 
+  USES {PLATOONLIB, PLATOONTESTLIB} 
+VARIABLES
+  vp,vs:Integer;  
+INITIALIZATION  
+  vs:=getData("vspeed");  
+  vp:=getData("lastpos");
+COMPOSITION
+    #
+   Assembly 
+   Components
+      drivermock : DoubleIntegerMock; 
+      mid : SimpleVehicle; 
+      tc : VehicleTester
+    Configuration
+      mid.conf("mid",vp,vs);  
+      drivermock.conf("pilotspeed","pilotpos");
+   Links ////////////assembly links//////////
+      @newl1: p-r mid.computeSpeed tc.computeSpeed
+      @newl2: p-r drivermock.intdata1 mid.pilotspeed
+      @newl3: p-r drivermock.intdata2 mid.pilotpos
+   End // assembly
+END_COMPOSITION
+
+#END of PlatoonSystem_TestApplication_T1

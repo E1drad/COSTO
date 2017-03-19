@@ -1,0 +1,17 @@
+COMPONENT PlatoonSystem_TestApplication_UnitTestApplication
+#Costo generated test environement for PlatoonSystem_TestApplication
+INTERFACE
+  #provides: {}
+  #requires: {}
+  #config: {}
+  #autorun: {}
+
+COMPOSITION
+    #Auto generated composition to test the component PlatoonSystem_TestApplication
+   Assembly
+   Components
+      cut : PlatoonSystem_TestApplication
+   End // assembly
+END_COMPOSITION
+
+ #END of PlatoonSystem_TestApplication_UnitTestApplication

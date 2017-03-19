@@ -1,0 +1,17 @@
+COMPONENT SimpleVehicle_UnitTestApplication
+#Costo generated test environement for SimpleVehicle
+INTERFACE
+  #provides: {}
+  #requires: {}
+  #config: {}
+  #autorun: {}
+
+COMPOSITION
+    #Auto generated composition to test the component SimpleVehicle
+   Assembly
+   Components
+      cut : SimpleVehicle
+   End // assembly
+END_COMPOSITION
+
+ #END of SimpleVehicle_UnitTestApplication

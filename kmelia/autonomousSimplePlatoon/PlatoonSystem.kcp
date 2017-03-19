@@ -1,0 +1,30 @@
+APPLICATION  PlatoonSystem
+INTERFACE  
+  
+USES {PLATOONLIB}
+
+SERVICES    
+
+END_SERVICES
+COMPOSITION
+  Assembly
+    Components
+      driver : SimpleDriver;
+      mid : SimpleVehicle;   
+      last : SimpleVehicle;
+      //solo : SimpleVehicle;            
+    Configuration
+      driver.conf(70); 
+      mid.conf("mid",48,0);
+      last.conf("last",25,0); 
+    Links ////////////assembly links//////////
+      @dmpos: p-r driver.pos mid.pilotpos 
+      @dmspeed: p-r driver.speed mid.pilotspeed
+      @dmgoal:p-r driver.goalreached mid.isgoalreached
+      @dmdist:p-r driver.giveSafeDistance mid.safeDistance
+      @mlpos: p-r mid.pos last.pilotpos 
+      @mlspeed: p-r mid.speed last.pilotspeed 
+      @mlgoal:p-r mid.goalreached last.isgoalreached
+      @mldist:p-r mid.giveSafeDistance last.safeDistance
+  End // assembly
+END_COMPOSITION

@@ -1,0 +1,18 @@
+COMPONENT SimpleDriver_UnitTestApplication
+#Costo generated test environement for SimpleDriver
+INTERFACE
+  #provides: {}
+  #requires: {}
+  #config: {}
+  #autorun: {}
+
+COMPOSITION
+    #Auto generated composition to test the component SimpleDriver
+   Assembly
+   Components
+      cut : SimpleDriver
+   
+End // assembly
+END_COMPOSITION
+
+ #END of SimpleDriver_UnitTestApplication

@@ -1,0 +1,14 @@
+TEST_INTENTION PlatoonTestIntention
+DESCRIPTION "the vehicle will stop  if it is too close to the previous one" 
+INPUT VARIABLES   
+  pilotspeed : Integer;
+  pilotpos:Integer; 
+  lastpos:Integer; 
+  vspeed : Integer;
+  safedistance:Integer
+OUTPUT VARIABLES  
+  oracledata : Integer;
+  speed:Integer  
+ ORACLE 
+  speed=oracledata
+    

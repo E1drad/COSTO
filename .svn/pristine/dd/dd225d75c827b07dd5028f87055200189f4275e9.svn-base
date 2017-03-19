@@ -1,0 +1,60 @@
+COMPONENT SimpleDriver
+
+INTERFACE  
+  provides : {pos, speed, goalreached, giveSafeDistance}
+  config : {conf}
+USES {PLATOONLIB}
+VARIABLES  
+  goal : Integer;
+  
+  
+INITIALIZATION
+  goal := 0;  
+  
+SERVICES 
+
+provided conf(thegoal:Integer)
+Behavior
+Init i Final f
+{ i-- goal:=thegoal-->f
+}
+End
+
+########### provided services 
+
+provided goalreached(followerpos:Integer):Boolean
+//return true if my goal is reached and the caller is within minimal distance of myself  
+Variables 
+ok:Boolean;
+ Behavior 
+ Init i
+ Final f 
+ {
+ i-- msg(" driver goalreached " + followerpos) --> i2,
+ i2 -- ok:=(goal-followerpos<=idealDistance)-->e2,
+ e2--SendResult(ok)-->f
+}
+End
+
+
+
+provided pos():Integer
+Behavior 
+Init i Final f  
+{ i-- SendResult(goal) -->f }
+End
+
+
+provided giveSafeDistance():Integer
+Behavior 
+Init i Final f  
+{ i -- msg("Driver give safedistance") --> i1,
+  i1 -- SendResult(10) -->f }
+End
+
+provided speed():Integer
+Behavior 
+Init i Final f  
+{ i--SendResult(40) -->f }
+End
+END_SERVICES

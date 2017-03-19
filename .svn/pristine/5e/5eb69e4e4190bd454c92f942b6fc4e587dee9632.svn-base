@@ -1,0 +1,32 @@
+COMPONENT VehicleTester
+INTERFACE  
+  provides : {testcase1}
+  requires : {computeSpeed} 
+  autorun: {testcase1}
+USES {PLATOONTESTLIB,PLATOONLIB,DEFAULT} 
+VARIABLES    
+  obs verdict: Boolean ;
+SERVICES
+
+provided testcase1 ()
+Interface
+  extrequires: {computeSpeed}   
+Variables
+computespeedresult : Integer;
+Sequence
+{   
+ # init sequence
+ # call
+  computespeedresult:= !!computeSpeed(getData("safeDistance"));
+  # oracle evaluation
+  verdict:= (computespeedresult = getData("oracledata"));
+  # transmit verdict
+  assertT(verdict);
+  #end of service
+  SendResult()
+  }
+End
+
+required computeSpeed(safeDistance : Integer) : Integer
+End
+END_SERVICES
