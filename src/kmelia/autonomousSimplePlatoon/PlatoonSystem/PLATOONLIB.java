@@ -1,8 +1,5 @@
 package kmelia.autonomousSimplePlatoon.PlatoonSystem;
-import costo.kml2java.framework.*;
-import costo.kml2java.framework.test.*;
-import costo.kml2java.framework.kmllibs.*;
-import static costo.kml2java.framework.kmllibs.KmeliaDefaultLib.*;
+import costo.kml2java.framework.IProvidedService;
 
 
 /**

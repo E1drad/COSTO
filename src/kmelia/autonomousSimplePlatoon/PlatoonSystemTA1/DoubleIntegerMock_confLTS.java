@@ -1,8 +1,6 @@
 package kmelia.autonomousSimplePlatoon.PlatoonSystemTA1;
-import costo.kml2java.framework.*;
-import costo.kml2java.framework.channels.*;
-import costo.kml2java.framework.*;
-import costo.kml2java.framework.kmllibs.*;
+import costo.kml2java.framework.ExecutableLTS;
+import costo.kml2java.framework.ProvidedService;
 
 /**
  *

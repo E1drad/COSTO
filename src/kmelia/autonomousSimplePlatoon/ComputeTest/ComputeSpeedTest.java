@@ -1,28 +1,22 @@
 package kmelia.autonomousSimplePlatoon.ComputeTest;
 
 import static org.junit.Assert.assertEquals;
-//import static org.mockito.Mockito.*;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.ReflectPermission;
 import java.security.AccessController;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.management.ReflectionException;
-
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.PlatoonSystem;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.PlatoonSystem;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_pilotpos;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_pos;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_safeDistance;
 
 import org.junit.Test;
-//import org.mockito.internal.creation.settings.CreationSettings;
 
 import costo.kml2java.framework.test.ServiceEvolutionValidator;
-
-import java.lang.reflect.*;
 
 public class ComputeSpeedTest {
 	

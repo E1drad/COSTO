@@ -1,12 +1,8 @@
 package kmelia.autonomousSimplePlatoon.PlatoonSystem;
-import costo.kml2java.framework.*;
-import costo.kml2java.framework.kmllibs.*;
-import costo.kml2java.framework.channels.*;
-import costo.kml2java.framework.annotations.*;
-import static costo.kml2java.framework.kmllibs.KmeliaDefaultLib.*;
-
-import static kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle.*;
-import static kmelia.autonomousSimplePlatoon.PlatoonSystem.PLATOONLIB.*;
+import costo.kml2java.framework.ExecutableComponent;
+import costo.kml2java.framework.ProvidedService;
+import costo.kml2java.framework.annotations.KmlElement;
+import costo.kml2java.framework.annotations.KmlElementType;
 /**
  *
  * @author costo kml2Java Generator

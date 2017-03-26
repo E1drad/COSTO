@@ -2,13 +2,10 @@ package kmelia.autonomousSimplePlatoon.ComputeTest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.ReflectPermission;
-import java.security.AllPermission;
-
-import costo.kml2java.framework.ExecutableComponent;
 
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;
+import costo.kml2java.framework.ExecutableComponent;
 
 public class Main {
 
@@ -65,7 +62,7 @@ public class Main {
 		for (Method m : systemMock) {
 			System.out.println(m.getName());
 		}
-		
+			
 		
 		
 		
