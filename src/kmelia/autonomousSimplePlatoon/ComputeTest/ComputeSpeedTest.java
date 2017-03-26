@@ -37,7 +37,7 @@ public class ComputeSpeedTest {
 	
 	@Test
 	public void posSettingTest(){
-	
+		
 		
 		//required services for simple vehicle: 
 		//pilotpos,pilotspeed, isgoalreached, safeDistance
