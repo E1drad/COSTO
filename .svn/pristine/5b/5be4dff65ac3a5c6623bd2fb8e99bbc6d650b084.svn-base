@@ -1,2 +1,0 @@
-getData=mylib.PlatoonTestlibMap.getData
-assertT=@WithSelf mylib.PlatoonTestlibMap.assertT
