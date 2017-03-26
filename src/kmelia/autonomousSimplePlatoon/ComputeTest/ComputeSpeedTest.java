@@ -1,7 +1,7 @@
 package kmelia.autonomousSimplePlatoon.ComputeTest;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+//import static org.mockito.Mockito.*;
 
 import java.security.AccessController;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_pos;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_safeDistance;
 
 import org.junit.Test;
-import org.mockito.internal.creation.settings.CreationSettings;
+//import org.mockito.internal.creation.settings.CreationSettings;
 
 import costo.kml2java.framework.test.ServiceEvolutionValidator;
 
@@ -84,7 +84,7 @@ public class ComputeSpeedTest {
 		
 		vehic.createServices();
 		
-		SimpleVehicle_safeDistance safeMock = mock(SimpleVehicle_safeDistance.class);
+		//SimpleVehicle_safeDistance safeMock = mock(SimpleVehicle_safeDistance.class);
 		
 		
 		
@@ -92,17 +92,17 @@ public class ComputeSpeedTest {
 		System.out.println(vehic.getRequiredServices());
 		
 		
-		SimpleDriver mockDriver = mock(SimpleDriver.class);
-		mockDriver.createServices();
-		System.out.println(mockDriver.getProvidedServices());
-		when(mockDriver.getGoal()).thenReturn(9);
-		System.out.println(mockDriver.getGoal());
-		verify(mockDriver).getGoal();
-		verify(mockDriver).createServices();
+		//SimpleDriver mockDriver = mock(SimpleDriver.class);
+		//mockDriver.createServices();
+		//System.out.println(mockDriver.getProvidedServices());
+		//when(mockDriver.getGoal()).thenReturn(9);
+		//System.out.println(mockDriver.getGoal());
+		//verify(mockDriver).getGoal();
+		//verify(mockDriver).createServices();
 		
 		
-		SimpleVehicle mockVehic = mock(SimpleVehicle.class);
-		SimpleVehicle mockVehic2 = mock(SimpleVehicle.class);
+		//SimpleVehicle mockVehic = mock(SimpleVehicle.class);
+		//SimpleVehicle mockVehic2 = mock(SimpleVehicle.class);
 		
 		
 		
