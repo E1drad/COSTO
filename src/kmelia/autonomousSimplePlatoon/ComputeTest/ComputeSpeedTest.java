@@ -2,17 +2,11 @@ package kmelia.autonomousSimplePlatoon.ComputeTest;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.lang.reflect.ReflectPermission;
 import java.security.AccessController;
 
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_pos;
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_safeDistance;
 
 import org.junit.Test;
 

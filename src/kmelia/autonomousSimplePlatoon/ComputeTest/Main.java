@@ -2,15 +2,19 @@ package kmelia.autonomousSimplePlatoon.ComputeTest;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.List;
 
+import kmelia.autonomousSimplePlatoon.PlatoonSystem.PlatoonSystem;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;
 import costo.kml2java.framework.ExecutableComponent;
+import costo.kml2java.framework.IRequiredService;
 
 public class Main {
 
 	public static void main(String[] args) {
-		SimpleVehicle vehic = new SimpleVehicle();
+/*		SimpleVehicle vehic = new SimpleVehicle();
 		//on récupère tous les fields qu'on set accessible
 		Field[] fields = vehic.getClass().getFields();
 		for (Field f : fields) {
@@ -61,8 +65,31 @@ public class Main {
 
 		for (Method m : systemMock) {
 			System.out.println(m.getName());
+		}*/
+		
+		
+		/*PlatoonSystem originalSys = new PlatoonSystem();
+		Field[] fieldsSys = originalSys.getClass().getFields();
+		for (Field f : fieldsSys) {
+			f.setAccessible(true);
+			System.out.println(f.getName());
+		}
+		
+		Method[] methodSys = originalSys.getClass().getMethods();
+		for (Method m : methodSys) {
+			m.setAccessible(true);
+			System.out.println(m.getName());
 		}
 			
+		System.out.println("BOUP");
+		Collection<IRequiredService> list = originalSys.getRequiredServices();
+		for (IRequiredService ir : list) {
+			System.out.println(ir.getLongName());
+		}*/
+		
+		
+		
+		
 		
 		
 		
