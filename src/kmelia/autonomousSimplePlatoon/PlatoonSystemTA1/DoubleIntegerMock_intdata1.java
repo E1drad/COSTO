@@ -1,8 +1,12 @@
 package kmelia.autonomousSimplePlatoon.PlatoonSystemTA1;
-import costo.kml2java.framework.ExecutableComponent;
-import costo.kml2java.framework.ProvidedService;
-import costo.kml2java.framework.annotations.KmlElement;
-import costo.kml2java.framework.annotations.KmlElementType;
+import costo.kml2java.framework.*;
+import costo.kml2java.framework.kmllibs.*;
+import costo.kml2java.framework.channels.*;
+import costo.kml2java.framework.annotations.*;
+import static costo.kml2java.framework.kmllibs.KmeliaDefaultLib.*;
+
+import static kmelia.autonomousSimplePlatoon.PlatoonSystemTA1.DoubleIntegerMock.*;
+import static kmelia.autonomousSimplePlatoon.PlatoonSystemTA1.PLATOONTESTLIB.*;
 /**
  *
  * @author costo kml2Java Generator
@@ -11,107 +15,92 @@ import costo.kml2java.framework.annotations.KmlElementType;
  */
 
 public  class DoubleIntegerMock_intdata1 extends ProvidedService {
-// component owner
-protected DoubleIntegerMock owner;
+	// component owner
+	protected DoubleIntegerMock owner;
 
+	// protected ? 
+	//parameters
 
+	// protected ? 
+	@KmlElement(type={KmlElementType.VARIABLE})
+	protected Integer Result   ;
+	@KmlElement(type={KmlElementType.VARIABLE})
+	public Integer getResult(){ return this.Result;}
 
-// protected ? 
-//parameters
+	public void initLTS(){
+		DoubleIntegerMock_intdata1LTS lts=new DoubleIntegerMock_intdata1LTS();
+		this.setLTS(lts);
+		lts.setService(this);
+		lts.init();
+	}
 
-// protected ? 
-@KmlElement(type={KmlElementType.VARIABLE})
-protected Integer Result   ;
-@KmlElement(type={KmlElementType.VARIABLE})
-public Integer getResult(){ return this.Result;}
+	public void initState(){
+		this.name="intdata1";
+	}
 
-public void initLTS(){
-DoubleIntegerMock_intdata1LTS lts=new DoubleIntegerMock_intdata1LTS();
-this.setLTS(lts);
-lts.setService(this);
-lts.init();
-}
+	public void setOwner(DoubleIntegerMock cowner){
+		this.owner=cowner;
+	}
 
-public void initState(){
-this.name="intdata1";
+	public ExecutableComponent getOwner(){
+		return this.owner;
+	}
 
-}
+	// constants
 
-public void setOwner(DoubleIntegerMock cowner){
-this.owner=cowner;
-}
+	//
 
+	Boolean guard_i___i1___1(){
+		return true;
+	}
+	//
 
-public ExecutableComponent getOwner(){
-return this.owner;
-}
+	Boolean guard_i1___f___2(){
+		return true;
+	}
 
+	public String toString(){
+		StringBuffer result=new StringBuffer("");
+		result.append(getOwner().getIdJFK());
+		result.append(".DoubleIntegerMock_intdata1: [");
+		result.append("Result");
+		result.append(":");
+		result.append(Result);
+		result.append("]");
+		return result.toString();
+	}
+	
+	@Override 
+	public String getStateSpace(){
+		return super.getStateSpace()+this.toString();
+	} 
 
+	public void setResult(Object param){
+		Result=(Integer) param; 
+	}
 
-// constants
+	public boolean isPreSatisfiedWithTheseParameters(Object[] params){
+		try{
+		}catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return  this.isPreConditionSatisfied();
+	}
+	public  void executeStartingTransaction(){
+		Object[] rcvresult=this.receiveServiceCall("__CALLER","intdata1",new Class<?>[]{},this);
+	}
 
+	//count1 := getData(dataname1)
 
+	@KmlElement(type={KmlElementType.TRANSITION})
+	void i___i1___1(){
+		owner.count1 = mylib.PlatoonTestlibMap.getData(owner.getDataname1());
+	}
+	//SENDRESULT(count1)
 
-//
- 
- Boolean guard_i___i1___1(){
-return true;
-}
-//
- 
- Boolean guard_i1___f___2(){
-return true;
-}
-
-
-public String toString(){
-StringBuffer result=new StringBuffer("");
-result.append(getOwner().getIdJFK());
-result.append(".DoubleIntegerMock_intdata1: [");
-result.append("Result");
-result.append(":");
-result.append(Result);
-
-result.append("]");
-return result.toString();
-}
-@Override 
-public String getStateSpace(){
-return super.getStateSpace()+this.toString();
-} 
-
-public void setResult(Object param){
-Result=(Integer) param; 
-}
-
-public boolean isPreSatisfiedWithTheseParameters(Object[] params){
-try{
-}catch (Exception e){
-e.printStackTrace();
-return false;
-}
-
-return  this.isPreConditionSatisfied();
-}
-public  void executeStartingTransaction(){
-Object[] rcvresult=this.receiveServiceCall("__CALLER","intdata1",new Class<?>[]{},this);
-}
-
-
-
-
-//count1 := getData(dataname1)
- 
- @KmlElement(type={KmlElementType.TRANSITION})
- void i___i1___1(){
-owner.count1 = mylib.PlatoonTestlibMap.getData(owner.getDataname1());
-}
-//SENDRESULT(count1)
- 
- @KmlElement(type={KmlElementType.TRANSITION})
- void i1___f___2(){
-this.returnService("__CALLER","intdata1",new Object[]{owner.getCount1()},this);;
-}
-
-
+	@KmlElement(type={KmlElementType.TRANSITION})
+	void i1___f___2(){
+		this.returnService("__CALLER","intdata1",new Object[]{owner.getCount1()},this);;
+	}
 }
