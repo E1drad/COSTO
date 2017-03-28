@@ -1,7 +1,0 @@
-#FUNCTION getStartPos: Void -> Integer .
-FUNCTION getData: String -> Integer .
-#FUNCTION getSafeDist: Void -> Integer .
-#FUNCTION getSpeedThreshold: Void -> Integer .
-FUNCTION assertT: Boolean -> Void .
-#FUNCTION initvp: Void -> Integer . 
-#FUNCTION initvs: Void -> Integer .
