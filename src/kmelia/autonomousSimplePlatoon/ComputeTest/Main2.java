@@ -22,7 +22,7 @@ public class Main2 extends ExecutableComponent {
 
 		PlatoonSystemMock2 mockSystem = new PlatoonSystemMock2();
 		
-		System.out.println("name of mockSystem = "+mockSystem.getName());
+		/*System.out.println("name of mockSystem = "+mockSystem.getName());
 		
 		mockSystem.setName("newName");
 		System.out.println("name expected is 'newName', and the name is : "+mockSystem.getName());
@@ -55,6 +55,8 @@ public class Main2 extends ExecutableComponent {
 		
 		mockSystem.setmid(mockSystem.getLast());
 		System.out.println("test config = " +mockSystem.getMid().getLastpos());
+		*/
+		
 		
 		
 		
