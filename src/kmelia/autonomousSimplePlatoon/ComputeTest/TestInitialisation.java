@@ -35,9 +35,12 @@ public class TestInitialisation {
 		assertEquals(70, (int)sys.driver.getGoal());
 		sys.driver.init();
 		Thread.sleep(100);
-
 		assertEquals(100, (int)sys.driver.getGoal());
-	
+		sys.driver.setIdJFK("newDriver");
+		assertEquals("newDriver", sys.driver.getIdJFK());
+		sys.driver.setSleepTime(510);
+		assertEquals(510, sys.driver.getSleepTime());
+
 	}
 
 }
