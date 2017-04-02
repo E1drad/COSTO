@@ -61,18 +61,9 @@ public class TestInitialisation {
 		sys.init();
 		Thread.sleep(100);
 		SimpleDriver driv = sys.driver; 
-		ExecutionBinding binder = new ExecutionBinding("binder", sys.getInnerContext(), null, null, null, null) {
-			
-			@Override
-			protected Channel createServicesandChannel(String newChanName,
-					String kindofchannel, ExecutableComponent clientComponent,
-					IRequiredService clientService) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
+		
 		IProvidedService serv = driv.getProvidedService("pos");
-		Channel chan = new Channel("_myChan",binder , serv, serv);
+		Channel chan = new Channel("_myChan",serv, serv);
 		
 		SimpleDriver_pos aSimpleDriver_pos = new SimpleDriver_pos();
 		aSimpleDriver_pos.setOwner(driv);
@@ -88,10 +79,21 @@ public class TestInitialisation {
 		/*serv.callService("_myChan", "myChan",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, serv);
 		Object[] rcvresult=serv.receiveServiceReturn("_myChan","myChan",new Class<?>[]{Integer.class},serv);*/
 		int res = (Integer) rcvresult[0];
-		
-		
 
 		System.out.println("res = "+res);
+		
+		assertEquals(70, res);
+		
+		driv.setConfig("conf",100);
+		driv.init();
+		Thread.sleep(100);
+		
+		serv.callService("_pos", "pos",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, serv);
+		Object[] rcvresult2=serv.receiveServiceReturn("_pos","pos",new Class<?>[]{Integer.class},serv);
+		Object res2 = rcvresult2[0];
+		
+		assertEquals(100, res2);
+
 		
 	}
 	@Test
@@ -114,5 +116,38 @@ public class TestInitialisation {
 		
 
 		System.out.println("res = "+res);
+		assertEquals(false, res);
+
+	}
+	
+	
+	@Test
+	public void testServicePosMyChan() throws InterruptedException{
+		PlatoonSystemMock2 sys = new PlatoonSystemMock2();
+		sys.init();
+		Thread.sleep(100);
+		SimpleDriver driv = sys.driver; 
+		
+		IProvidedService serv = driv.getProvidedService("pos");
+		Channel chan = new Channel("_myChan",serv, serv);
+		
+		SimpleDriver_pos aSimpleDriver_pos = new SimpleDriver_pos();
+		aSimpleDriver_pos.setOwner(driv);
+		aSimpleDriver_pos.setName("myChan");
+	
+		serv.assignChannel(chan);
+		driv.initBindings();
+		driv.init();
+		sys.init();
+		
+		
+		serv.callService("_myChan", "myChan",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, serv);
+		Object[] rcvresult=serv.receiveServiceReturn("_myChan","myChan",new Class<?>[]{Integer.class},serv);
+		int res = (Integer) rcvresult[0];
+
+		System.out.println("res = "+res);
+		
+		assertEquals(70, res);
+		
 	}
 }
