@@ -41,7 +41,16 @@ public class TestWithTestChannel {
 		int res1 = (Integer) myChan.getResult();
 		 // On a configuré à 70 dans la classe PlatoonSystemMock2
 		assertEquals(res1, 70);
-		
+		//stop() soulève une erreur -> l'ignorée
+		posForTest.stop();
+		//On test si le channel suit le changement de config
+		driv.setConfig("conf",100);
+		driv.init();
+		posForTest.start();
+		Thread.sleep(100);
+
+		res1= (Integer) myChan.getResult();
+		assertEquals(res1, 100);
 	}
 	/**
 	 * Comparaison entre le mock chan et le channel de base
