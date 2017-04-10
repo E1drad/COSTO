@@ -63,21 +63,12 @@ public class TestInitialisation {
 		SimpleDriver driv = sys.driver; 
 		
 		IProvidedService serv = driv.getProvidedService("pos");
-		Channel chan = new Channel("_myChan",serv, serv);
 		
-		SimpleDriver_pos aSimpleDriver_pos = new SimpleDriver_pos();
-		aSimpleDriver_pos.setOwner(driv);
-		aSimpleDriver_pos.setName("myChan");
-	
-		serv.assignChannel(chan);
-		driv.initBindings();
-		driv.init();
-		sys.init();
+
 		serv.callService("_pos", "pos",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, serv);
 		Object[] rcvresult=serv.receiveServiceReturn("_pos","pos",new Class<?>[]{Integer.class},serv);
 		
-		/*serv.callService("_myChan", "myChan",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, serv);
-		Object[] rcvresult=serv.receiveServiceReturn("_myChan","myChan",new Class<?>[]{Integer.class},serv);*/
+		
 		int res = (Integer) rcvresult[0];
 
 		System.out.println("res = "+res);
@@ -131,12 +122,14 @@ public class TestInitialisation {
 		IProvidedService serv = driv.getProvidedService("pos");
 		Channel chan = new Channel("_myChan",serv, serv);
 		
-		SimpleDriver_pos aSimpleDriver_pos = new SimpleDriver_pos();
+		/*SimpleDriver_pos aSimpleDriver_pos = new SimpleDriver_pos();
 		aSimpleDriver_pos.setOwner(driv);
 		aSimpleDriver_pos.setName("myChan");
 	
 		serv.assignChannel(chan);
-		driv.initBindings();
+		driv.initBindings();*/
+		sys.getRequiredService("safeDistance").setReqChannel(chan);
+
 		driv.init();
 		sys.init();
 		
