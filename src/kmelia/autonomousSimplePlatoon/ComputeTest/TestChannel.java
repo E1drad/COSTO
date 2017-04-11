@@ -12,6 +12,9 @@ public class TestChannel extends Channel{
 	private Object result;
 
 	public Object getResult() {
+		//this.getOwner().closedChannel(this);
+		this.server.stop();
+		//this.close(this.server);
 		return result;
 	}
 

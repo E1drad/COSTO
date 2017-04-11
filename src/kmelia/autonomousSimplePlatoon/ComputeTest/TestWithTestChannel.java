@@ -42,7 +42,7 @@ public class TestWithTestChannel {
 		 // On a configuré à 70 dans la classe PlatoonSystemMock2
 		assertEquals(res1, 70);
 		//stop() soulève une erreur -> l'ignorée
-		posForTest.stop();
+		//posForTest.stop();
 		//On test si le channel suit le changement de config
 		driv.setConfig("conf",100);
 		driv.init();
@@ -82,7 +82,7 @@ public class TestWithTestChannel {
 		int res1 = (Integer) myChan.getResult();
 		
 		//stop() soulève une erreur -> l'ignorée
-		posForTest.stop();
+		//posForTest.stop();
 		// Test avec le channel de base
 		posForTest.callService("_pos", "pos",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, posForTest);
 		Object[] rcvresult=posForTest.receiveServiceReturn("_pos","pos",new Class<?>[]{Integer.class},posForTest);
