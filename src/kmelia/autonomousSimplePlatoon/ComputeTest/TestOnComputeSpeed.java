@@ -4,10 +4,15 @@ import static org.junit.Assert.*;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver_pos;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;
+import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_isgoalreached;
+import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_pilotpos;
+import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_pilotspeed;
+import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle_safeDistance;
 
 import org.junit.Test;
 
 import costo.kml2java.framework.IProvidedService;
+import costo.kml2java.framework.IRequiredService;
 
 public class TestOnComputeSpeed {
 
@@ -21,6 +26,8 @@ public class TestOnComputeSpeed {
 		SimpleVehicle midVeh = sys.mid;
 		SimpleVehicle lastVeh = sys.last;
 		SimpleDriver driv = sys.driver;
+		
+		
 		//Récupération des services
 		IProvidedService servCom = midVeh.getProvidedService("computeSpeed");
 		IProvidedService servPos = midVeh.getProvidedService("pos");
@@ -66,6 +73,40 @@ public class TestOnComputeSpeed {
 		servDSpeed.callService("_speed", "speed",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")},servDSpeed);
 		rcvresult=servDSpeed.receiveServiceReturn("_speed","speed",new Class<?>[]{Integer.class},servDSpeed);
 		tab[6] =rcvresult[0];
+		
+		//Test
+		
+		
+		// Création de mock channel sur les required services
+		
+		//pilotpos
+		SimpleVehicle_pilotpos posPilotTest = (SimpleVehicle_pilotpos) midVeh.getRequiredService("pilotpos");
+		
+		TestChannel myChanPos = new TestChannel("myChanPos_", null, posPilotTest);
+		myChanPos.setFalseResult(50);
+		posPilotTest.assignChannel(myChanPos);
+	
+		//pilotspeed
+		SimpleVehicle_pilotspeed speedPilotTest = (SimpleVehicle_pilotspeed) midVeh.getRequiredService("pilotspeed");
+		
+		TestChannel myChanSpeed = new TestChannel("myChanSpeed_", null, speedPilotTest);
+		myChanSpeed.setFalseResult(80);
+		speedPilotTest.assignChannel(myChanSpeed);
+		
+		//safeDistance
+		SimpleVehicle_safeDistance safeDistanceTest = (SimpleVehicle_safeDistance) midVeh.getRequiredService("safeDistance");
+		
+		TestChannel myChanSafeDistance = new TestChannel("myChanSafeDistance_", null, safeDistanceTest);
+		myChanSafeDistance.setFalseResult(10);
+		safeDistanceTest.assignChannel(myChanSafeDistance);
+		
+		//isgoalreached
+		SimpleVehicle_isgoalreached isGoalRTest = (SimpleVehicle_isgoalreached) midVeh.getRequiredService("isgoalreached");
+		
+		TestChannel myChanIsGoalR = new TestChannel("myChanmIsGoalR_", null, isGoalRTest);
+		myChanIsGoalR.setFalseResult(false);
+		isGoalRTest.assignChannel(myChanIsGoalR);
+		
 		
 		//ComputeSpeed
 		//servCom.callService("_computeSpeed", "computeSpeed",new Object[]{mylib.PlatoonTestlibMap.getData("pilotpos"),mylib.PlatoonTestlibMap.getData("lastpos"),mylib.PlatoonTestlibMap.getData("safeDistance"),mylib.PlatoonTestlibMap.getData("vspeed"),mylib.PlatoonTestlibMap.getData("pilotspeed"),mylib.PlatoonTestlibMap.getData("oracledata") }, servCom);
