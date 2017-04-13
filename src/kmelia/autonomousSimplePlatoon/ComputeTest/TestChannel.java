@@ -61,7 +61,7 @@ public void addMockValue(String callname, Object...values){
 	public void callService(String channel, String message, Object[] params, IService orig)
 			throws KmlCommunicationException {
 	
-		System.out.println("the service calls another Service"+channel+message);
+		System.out.println("the service calls another Service "+channel+" "+message);
 	}
 
 	@Override

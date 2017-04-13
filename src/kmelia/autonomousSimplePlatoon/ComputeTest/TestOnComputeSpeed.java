@@ -17,9 +17,14 @@ import costo.kml2java.framework.exceptions.KmlCommunicationException;
 import costo.kml2java.framework.exceptions.ServiceException;
 
 public class TestOnComputeSpeed {
-
+	/**
+	 * Test quand le vehicle est suffisament loin du driver.
+	 * @throws InterruptedException
+	 * @throws KmlCommunicationException
+	 * @throws ServiceException
+	 */
 	@Test
-	public void testComputeSpeed1() throws InterruptedException, KmlCommunicationException, ServiceException{
+	public void testComputeSpeedOk() throws InterruptedException, KmlCommunicationException, ServiceException{
 	
 		
 		// Creating the component under test
@@ -43,7 +48,7 @@ public class TestOnComputeSpeed {
 		veh.getRequiredService("pilotspeed").setReqChannel(testChan);
 		
 		// assigning call parameters for the Service under test and mock values for its required services
-		testChan.setCallparams(120);
+		testChan.setCallparams(120);// safeDistance
 		testChan.addMockValue("pilotpos", 420);
 		testChan.addMockValue("pilotspeed", 40);
 
@@ -59,15 +64,49 @@ public class TestOnComputeSpeed {
 		
 		//tests, asserts
 		System.out.println(testChan.getResult());
-		assertEquals(posValue,testChan.getResult());
+		assertEquals(true,(Integer)testChan.getResult()>0);
 		
-		// On test avec d'autre valeurs
 		
-		testChan.clearMockValue();
-		testChan.setCallparams(40);
-		testChan.addMockValue("pilotpos", 42);
-		testChan.addMockValue("pilotspeed", 50);
+	}
+	
+	
+	/**
+	 * Test quand le vehicle est trop proche du driver
+	 * @throws InterruptedException
+	 * @throws KmlCommunicationException
+	 * @throws ServiceException
+	 */
+	@Test
+	public void testComputeSpeedTropProche() throws InterruptedException, KmlCommunicationException, ServiceException{
+	
 		
+		// Creating the component under test
+		SimpleVehicle veh = new SimpleVehicle("SimpleVehicle", new TestOuterContext("test"),"last");
+		int posValue=10;
+		
+		veh.setConfig("conf","last",posValue,0);
+		veh.init();
+		
+	
+		// getting the service under test 
+		IProvidedService provServToTest = veh.getProvidedService("computeSpeed");
+	
+		// uncomment the following to log every transition
+	//	provServToTest.addServiceListener(new LogServiceListener());
+		
+		//Create and assign fake test channel to the service and its required services
+		TestChannel testChan = new TestChannel("TESTCHANN",null,provServToTest);
+		provServToTest.assignChannel(testChan);
+		veh.getRequiredService("pilotpos").setReqChannel(testChan);
+		veh.getRequiredService("pilotspeed").setReqChannel(testChan);
+		
+		// assigning call parameters for the Service under test and mock values for its required services
+		testChan.setCallparams(120); // safeDistance
+		testChan.addMockValue("pilotpos", 40);
+		testChan.addMockValue("pilotspeed", 40);
+
+	
+	   // starting the service 
 		provServToTest.start();
 	    // waiting for the lts to reach its final state
 		Thread.sleep(1000); // Demande un temps de sleep important
@@ -78,38 +117,226 @@ public class TestOnComputeSpeed {
 		
 		//tests, asserts
 		System.out.println(testChan.getResult());
-		assertEquals(posValue,testChan.getResult());
+		assertEquals(true,(Integer)testChan.getResult()==0);
 		
-		// Avec une autre posValue
-		posValue=8;
+		
+	}
+	
+	/**
+	 * Test quand le vehicle est devant le driver
+	 * @throws InterruptedException
+	 * @throws KmlCommunicationException
+	 * @throws ServiceException
+	 */
+	@Test
+	public void testComputeSpeedDevantDriver() throws InterruptedException, KmlCommunicationException, ServiceException{
+	
+		
+		// Creating the component under test
+		SimpleVehicle veh = new SimpleVehicle("SimpleVehicle", new TestOuterContext("test"),"last");
+		int posValue=100;
 		
 		veh.setConfig("conf","last",posValue,0);
 		veh.init();
-		Thread.sleep(1000);
+		
+	
+		// getting the service under test 
+		IProvidedService provServToTest = veh.getProvidedService("computeSpeed");
+	
+		// uncomment the following to log every transition
+	//	provServToTest.addServiceListener(new LogServiceListener());
+		
+		//Create and assign fake test channel to the service and its required services
+		TestChannel testChan = new TestChannel("TESTCHANN",null,provServToTest);
+		provServToTest.assignChannel(testChan);
+		veh.getRequiredService("pilotpos").setReqChannel(testChan);
+		veh.getRequiredService("pilotspeed").setReqChannel(testChan);
+		
+		// assigning call parameters for the Service under test and mock values for its required services
+		testChan.setCallparams(120); // safeDistance
+		testChan.addMockValue("pilotpos", 40);
+		testChan.addMockValue("pilotspeed", 40);
 
+	
+	   // starting the service 
 		provServToTest.start();
 	    // waiting for the lts to reach its final state
 		Thread.sleep(1000); // Demande un temps de sleep important
 		
-		// stop the service
+	// stop the service
 		// FIXME : Error: closing requirements of SimpleVehicle::computeSpeed while not finished
 		provServToTest.stop(testChan);
 		
-		//TODO : trouver pourquoi on a 0 ici
+		//tests, asserts
 		System.out.println(testChan.getResult());
-		assertEquals(0,testChan.getResult());
+		assertEquals(true,(Integer)testChan.getResult()==0);
+		
+		
+	}
+	
+	
+	/**
+	 * Test quand le driver va très vite. Cela ne doit normalement pas affecter le vehicule
+	 * @throws InterruptedException
+	 * @throws KmlCommunicationException
+	 * @throws ServiceException
+	 */
+	@Test
+	public void testComputeSpeedDriverRapide() throws InterruptedException, KmlCommunicationException, ServiceException{
+	
+		
+		// Creating the component under test
+		SimpleVehicle veh = new SimpleVehicle("SimpleVehicle", new TestOuterContext("test"),"last");
+		int posValue=10;
+		
+		veh.setConfig("conf","last",posValue,0);
+		veh.init();
+		
+	
+		// getting the service under test 
+		IProvidedService provServToTest = veh.getProvidedService("computeSpeed");
+	
+		// uncomment the following to log every transition
+	//	provServToTest.addServiceListener(new LogServiceListener());
+		
+		//Create and assign fake test channel to the service and its required services
+		TestChannel testChan = new TestChannel("TESTCHANN",null,provServToTest);
+		provServToTest.assignChannel(testChan);
+		veh.getRequiredService("pilotpos").setReqChannel(testChan);
+		veh.getRequiredService("pilotspeed").setReqChannel(testChan);
+		
+		// assigning call parameters for the Service under test and mock values for its required services
+		testChan.setCallparams(120); // safeDistance
+		testChan.addMockValue("pilotpos", 400);
+		testChan.addMockValue("pilotspeed", 4000);
+
+	
+	   // starting the service 
+		provServToTest.start();
+	    // waiting for the lts to reach its final state
+		Thread.sleep(1000); // Demande un temps de sleep important
+		
+	// stop the service
+		// FIXME : Error: closing requirements of SimpleVehicle::computeSpeed while not finished
+		provServToTest.stop(testChan);
+		
+		//tests, asserts
+		System.out.println(testChan.getResult());
+		assertEquals(true,(Integer)testChan.getResult()>0);
+		
+		
+	}
+	
+	
+	/**
+	 * Test quand la safe distande est négative
+	 * @throws InterruptedException
+	 * @throws KmlCommunicationException
+	 * @throws ServiceException
+	 */
+	@Test
+	public void testComputeSpeedNegativeSafeDistance() throws InterruptedException, KmlCommunicationException, ServiceException{
+	
+		
+		// Creating the component under test
+		SimpleVehicle veh = new SimpleVehicle("SimpleVehicle", new TestOuterContext("test"),"last");
+		int posValue=10;
+		
+		veh.setConfig("conf","last",posValue,20);
+		veh.init();
+		
+	
+		// getting the service under test 
+		IProvidedService provServToTest = veh.getProvidedService("computeSpeed");
+	
+		// uncomment the following to log every transition
+	//	provServToTest.addServiceListener(new LogServiceListener());
+		
+		//Create and assign fake test channel to the service and its required services
+		TestChannel testChan = new TestChannel("TESTCHANN",null,provServToTest);
+		provServToTest.assignChannel(testChan);
+		veh.getRequiredService("pilotpos").setReqChannel(testChan);
+		veh.getRequiredService("pilotspeed").setReqChannel(testChan);
+		
+		// assigning call parameters for the Service under test and mock values for its required services
+		testChan.setCallparams(120); // safeDistance
+		testChan.addMockValue("pilotpos", 400);
+		testChan.addMockValue("pilotspeed", 4000);
+
+	
+	   // starting the service 
+		provServToTest.start();
+	    // waiting for the lts to reach its final state
+		Thread.sleep(1000); // Demande un temps de sleep important
+		
+	// stop the service
+		// FIXME : Error: closing requirements of SimpleVehicle::computeSpeed while not finished
+		provServToTest.stop(testChan);
+		
+		//tests, asserts
+		System.out.println(testChan.getResult());
+		assertEquals(true,(Integer)testChan.getResult()>0);
+		
+		
+	}
+	
+	/**
+	 * Test quand le vehicule a déjà une vitesse
+	 * @throws InterruptedException
+	 * @throws KmlCommunicationException
+	 * @throws ServiceException
+	 */
+	@Test
+	public void testComputeSpeedDejaLancer() throws InterruptedException, KmlCommunicationException, ServiceException{
+	
+		
+		// Creating the component under test
+		SimpleVehicle veh = new SimpleVehicle("SimpleVehicle", new TestOuterContext("test"),"last");
+		int posValue=10;
+		
+		veh.setConfig("conf","last",posValue,20);
+		veh.init();
+		
+	
+		// getting the service under test 
+		IProvidedService provServToTest = veh.getProvidedService("computeSpeed");
+	
+		// uncomment the following to log every transition
+	//	provServToTest.addServiceListener(new LogServiceListener());
+		
+		//Create and assign fake test channel to the service and its required services
+		TestChannel testChan = new TestChannel("TESTCHANN",null,provServToTest);
+		provServToTest.assignChannel(testChan);
+		veh.getRequiredService("pilotpos").setReqChannel(testChan);
+		veh.getRequiredService("pilotspeed").setReqChannel(testChan);
+		
+		// assigning call parameters for the Service under test and mock values for its required services
+		testChan.setCallparams(-1); // safeDistance
+		testChan.addMockValue("pilotpos", 400);
+		testChan.addMockValue("pilotspeed", 4000);
+
+	
+	   // starting the service 
+		provServToTest.start();
+	    // waiting for the lts to reach its final state
+		Thread.sleep(1000); // Demande un temps de sleep important
+		
+	// stop the service
+		// FIXME : Error: closing requirements of SimpleVehicle::computeSpeed while not finished
+		provServToTest.stop(testChan);
+		
+		//tests, asserts
+		System.out.println(testChan.getResult());
+		assertEquals(true,(Integer)testChan.getResult()>0);
+		
+		
 	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	/*//FIXME Trouver quoi donner au 
+	//---------------Première version des tests -> ne marche pas -> trace écrite------------------
+	/*
 	@Test
 	public void testComputeSpeed() throws InterruptedException{
 		//Initialisation
