@@ -1,5 +1,8 @@
 package kmelia.autonomousSimplePlatoon.ComputeTest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import costo.kml2java.framework.IService;
 import costo.kml2java.framework.channels.Channel;
 import costo.kml2java.framework.exceptions.KmlCommunicationException;
@@ -10,37 +13,42 @@ import costo.kml2java.framework.exceptions.KmlCommunicationException;
  */
 public class TestChannel extends Channel{
 	private Object result;
-	public Object falseResult = -42; // Quand on veut passer une valeur bidon
+	private Object[] callparams;
+	private Map<String,Object[]> mockvalues;
+	
+	
+	
+	public void setCallparams(Object... callparams) {
+		this.callparams = callparams;
+	}
+	
+	/**
+	 * 
+	 * @param callname name of the required service to mock
+	 * @param values results to be returned by the mocked service
+	 */
+public void addMockValue(String callname, Object...values){
+	mockvalues.put(callname, values);
+	
+}
 	public Object getResult() {
-		//this.getOwner().closedChannel(this);
-		//this.close(this.server);
-		
-		if ((Integer)falseResult == -42) {
-			this.server.stop();	
-			return result;
-		}else{// Si falseResult alors on passe la valeur bidon
-			result = falseResult;
-			return result;
-		}
-		
+		return result;
 	}
 
 	public TestChannel(String name, IService client, IService server) {
 		super(name, client, server);
-		
+		mockvalues= new HashMap<>();
 	}
 	
-	
-	public void setFalseResult(Object value){
-		falseResult=value;
+	public void clearMockValue(){
+		mockvalues.clear();
 	}
+
 
 	@Override
 	public Object[] receiveMessage(String channel, String message, Class<?>[] paramtypes, IService orig) {
 		System.err.println(" the Service wants to receive a message, use a mock "+message);
-		Object[] obj = {falseResult};
-		System.out.println(obj[0]);
-		return obj;
+		return null;
 	}
 
 	@Override
@@ -58,28 +66,34 @@ public class TestChannel extends Channel{
 
 	@Override
 	public void returnService(String channel, String message, Object[] params, IService orig) {
-		result=params[0];
-
-	 
+		System.out.println("the service "+message+" returns "+ params[0]);
+		result=params[0]; 
 	}
+	
 
 	@Override
 	public Object[] receiveServiceCall(String channel, String message, Class<?>[] paramtypes, IService orig) {
-		//System.out.println("The service received a ServiceCall"+channel+message);
-		//FIXME : give the service parameters here if needed
-		Object[] obj = {falseResult};
-		System.out.println(obj[0]);
-		return obj;
+	
+		return this.callparams;
 	}
 
 	@Override
 	public Object[] receiveServiceReturn(String channel, String message, Class<?>[] paramtypes, IService orig) {
-		System.out.println("Hello55");
-		//System.err.println("the service wants a Service return for "+channel+message +" , use a mock ");
-		Object[] obj = {falseResult};
-		System.out.println(obj[0]);
-		return obj;
 		
+		
+		//System.err.println("the service wants a Service return for "+channel+message +" , using a mock "+mockvalues.get(message)[0]);
+		// the following ack  is needed to unlock the service
+		orig.ack(this, 0);
+		return mockvalues.get(message);
 	}
+	@Override
+	public void close(IService source) {
+		// Overriding to NOP because this channel is one-ended
+	}
+	@Override
+	public void cut(IService source) {
+		// Overriding to NOP because this channel is one-ended
+	}
+
 
 }
