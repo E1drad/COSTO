@@ -1,4 +1,4 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
 import static org.junit.Assert.assertEquals;
 

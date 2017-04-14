@@ -1,4 +1,4 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;

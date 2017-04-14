@@ -1,4 +1,4 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

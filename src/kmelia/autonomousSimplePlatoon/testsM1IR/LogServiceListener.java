@@ -1,4 +1,4 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
 import costo.kml2java.framework.IService;
 import costo.kml2java.framework.IServiceEvolutionListener;

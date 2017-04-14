@@ -1,4 +1,4 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
 import static org.junit.Assert.*;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
@@ -176,7 +176,7 @@ public class TestOnComputeSpeed {
 	
 	
 	/**
-	 * Test quand le driver va très vite. Cela ne doit normalement pas affecter le vehicule
+	 * Test quand le driver va trï¿½s vite. Cela ne doit normalement pas affecter le vehicule
 	 * @throws InterruptedException
 	 * @throws KmlCommunicationException
 	 * @throws ServiceException
@@ -229,7 +229,7 @@ public class TestOnComputeSpeed {
 	
 	
 	/**
-	 * Test quand la safe distande est négative
+	 * Test quand la safe distande est nï¿½gative
 	 * @throws InterruptedException
 	 * @throws KmlCommunicationException
 	 * @throws ServiceException
@@ -281,7 +281,7 @@ public class TestOnComputeSpeed {
 	}
 	
 	/**
-	 * Test quand le vehicule a déjà une vitesse
+	 * Test quand le vehicule a dï¿½jï¿½ une vitesse
 	 * @throws InterruptedException
 	 * @throws KmlCommunicationException
 	 * @throws ServiceException
@@ -335,7 +335,7 @@ public class TestOnComputeSpeed {
 	
 	
 	
-	//---------------Première version des tests -> ne marche pas -> trace écrite------------------
+	//---------------Premiï¿½re version des tests -> ne marche pas -> trace ï¿½crite------------------
 	/*
 	@Test
 	public void testComputeSpeed() throws InterruptedException{
@@ -348,7 +348,7 @@ public class TestOnComputeSpeed {
 		SimpleDriver driv = sys.driver;
 		
 		
-		//Récupération des services
+		//Rï¿½cupï¿½ration des services
 		IProvidedService servCom = midVeh.getProvidedService("computeSpeed");
 		IProvidedService servPos = midVeh.getProvidedService("pos");
 		IProvidedService servSpeed = midVeh.getProvidedService("speed");
@@ -397,7 +397,7 @@ public class TestOnComputeSpeed {
 		//Test
 		
 		
-		// Création de mock channel sur les required services
+		// Crï¿½ation de mock channel sur les required services
 		
 		//pilotpos
 		SimpleVehicle_pilotpos posPilotTest = (SimpleVehicle_pilotpos) midVeh.getRequiredService("pilotpos");

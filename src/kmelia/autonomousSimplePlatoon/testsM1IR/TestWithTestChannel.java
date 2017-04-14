@@ -1,4 +1,4 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
 import static org.junit.Assert.*;
 import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
@@ -25,10 +25,10 @@ public class TestWithTestChannel {
 		Thread.sleep(50);
 		
 		SimpleDriver  driv = sys.driver;
-		// Récupération services
+		// Rï¿½cupï¿½ration services
 		SimpleDriver_pos posForTest = (SimpleDriver_pos) driv.getProvidedService("pos");
 		
-		//Création new channel 
+		//Crï¿½ation new channel 
 		
 		TestChannel myChan = new TestChannel("myChan_", null, posForTest);
 		posForTest.assignChannel(myChan);
@@ -39,9 +39,9 @@ public class TestWithTestChannel {
 		Thread.sleep(100);
 		
 		int res1 = (Integer) myChan.getResult();
-		 // On a configuré à 70 dans la classe PlatoonSystemMock2
+		 // On a configurï¿½ ï¿½ 70 dans la classe PlatoonSystemMock2
 		assertEquals(res1, 70);
-		//stop() soulève une erreur -> l'ignorée
+		//stop() soulï¿½ve une erreur -> l'ignorï¿½e
 		//posForTest.stop();
 		//On test si le channel suit le changement de config
 		driv.setConfig("conf",100);
@@ -66,10 +66,10 @@ public class TestWithTestChannel {
 		Thread.sleep(50);
 		
 		SimpleDriver  driv = sys.driver;
-		// Récupération services
+		// Rï¿½cupï¿½ration services
 		SimpleDriver_pos posForTest = (SimpleDriver_pos) driv.getProvidedService("pos");
 		
-		//Création new channel 
+		//Crï¿½ation new channel 
 		
 		TestChannel myChan = new TestChannel("myChan_", null, posForTest);
 		posForTest.assignChannel(myChan);
@@ -81,7 +81,7 @@ public class TestWithTestChannel {
 		
 		int res1 = (Integer) myChan.getResult();
 		
-		//stop() soulève une erreur -> l'ignorée
+		//stop() soulï¿½ve une erreur -> l'ignorï¿½e
 		//posForTest.stop();
 		// Test avec le channel de base
 		posForTest.callService("_pos", "pos",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, posForTest);

@@ -1,15 +1,5 @@
-package kmelia.autonomousSimplePlatoon.ComputeTest;
+package kmelia.autonomousSimplePlatoon.testsM1IR;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.List;
-
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.PlatoonSystem;
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleDriver;
-import kmelia.autonomousSimplePlatoon.PlatoonSystem.SimpleVehicle;
-import costo.kml2java.framework.ExecutableComponent;
-import costo.kml2java.framework.IRequiredService;
 
 public class Main {
 
