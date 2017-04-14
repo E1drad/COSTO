@@ -67,6 +67,7 @@ public void addMockValue(String callname, Object...values){
 	@Override
 	public void returnService(String channel, String message, Object[] params, IService orig) {
 		System.out.println("the service "+message+" returns "+ params[0]);
+		orig.ack(this,0);
 		result=params[0]; 
 	}
 	
