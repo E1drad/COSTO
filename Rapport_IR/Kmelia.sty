@@ -1,0 +1,158 @@
+%
+% Style LaTeX Listings pour Kmelia 
+%
+% First author : Arnaud Lanoix
+% Modified by : Pascal Andre
+%
+
+\RequirePackage{listings}
+\RequirePackage{amssymb}
+\RequirePackage{color}
+
+\definecolor{gris25}{gray}{0.50}
+
+\lstdefinelanguage{Kmelia}
+{
+morekeywords=[1]{%%%%%%%%%%% Composant
+COMPONENT,
+INTERFACE,
+USES,
+TYPES,
+CONSTANTS,
+VARIABLES,
+INVARIANT,
+PROPERTIES,
+SERVICE_PROPERTIES,
+INITIALIZATION,
+SERVICES,END_SERVICES,
+ASSEMBLY,
+COMPOSITION,END_COMPOSITION},
+%
+morekeywords=[1]{%%%%%%%%%%% Detail d'un service
+provided,required,
+external,
+Interface,
+Properties,
+Virtual,
+Pre,
+Constants,Variables,Invariant,Initialization,
+Assembly,Assemblies,Components,Links,Promotion,
+Behavior,Behaviour,
+Post,
+End},
+%
+%%
+%%%
+keywordstyle=[1]{\textbf},%
+%%%
+%%
+%
+morekeywords=[2]{%%%%%%%%%%% Declaration des interfaces
+provides,requires},
+%
+morekeywords=[2]{%%%%%%%%%% Detail de l'interface d'un service
+subprovides,calrequires,extrequires,intrequires,
+receptions,sendings},
+%
+morekeywords=[2]{%%%%%%%%% Detail declaration de variables/constantes
+obs,from},
+%
+morekeywords=[2]{%%%%%%%%% Detail declaration de types
+struct,array,enum,range,setOf},
+%
+morekeywords=[2]{%%%%%%%%%% Detail declaration Behavior/LTS
+Init,Final,_SELF,_CALLER},
+%
+morekeywords=[2]{%%%%%%%%%% Detail expressions
+if,then,else,fi},
+%
+%%
+%%%
+keywordstyle=[2]{\itshape\textbf},%
+%%%
+%%
+%%%%%%%%%%%%%%%%%% OPERATEURS
+%
+%PA : operateurs = keywords et non maths car induit en erreur
+%
+morekeywords=[3]{%%%%%%%%%% Detail declaration Properties
+_PROVIDER},
+%
+morekeywords=[3]{%%%%%%%%%% Detail predicate operators
+forall, exists, unchanged},
+%
+morekeywords=[3]{%%%%%%%%%% Detail number operators
+or, and, implies, not, xor, nor, nand,equiv},
+%
+morekeywords=[3]{%%%%%%%%%% Detail setOf operators
+add, addAll, includes, excludes, union, inter, differ, remove, removeAll, size, in, notin},
+%
+keywordstyle=[3]{\itshape\color{blue}},
+%
+%%
+morekeywords=[4]{%%%%%%%%%% Detail postcondition operators
+old, result, Result},
+%
+keywordstyle=[4]{\color{red}},
+%
+%%%
+%%%%%%%%%%%%%%%%%% COMMENTAIRES
+commentstyle={\itshape \color{gris25}},
+morecomment=[l]{\#}, 
+morecomment=[l]{//}, 
+morecomment=[s]{/*}{*/},
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%
+keepspaces=true, 
+literate=%
+%
+{(}{$($}{1}% PAR_START
+{)}{$)$}{1}% PAR_END
+%{{}{$\{$}2% BLOCK_START %%%%%%%% A creuser un peu....
+%{}}{$\}$}2% BLOCK_END
+%{[}{$\[$}2% BRACKET_START
+%{]}{$\]$}2% BRACKET_END
+%
+%{BOOL}{$\mathbb{B}$}{1}% BOOL
+% TRUE "true"
+% FALSE "false"
+%
+%{INT}{$\mathbb{Z}$}{1}% INT
+%
+{||}{$||$}{1}% LOR
+{&&}{$\&\&$}{1}% LAND
+{<>}{<>}{1}% DIFF
+{!=}{$!=$}{1}% "!="
+{<}{$<$}{1}% "<"
+{>}{$>$}{1}% ">"
+{<=}{$<=$}{1}% LE 
+{>=}{$>=$}{1}% GE
+{=}{$=$}{1}% EQUAL
+{+}{$+$}{1}% PLUS
+{-}{$-$}{1}% MINUS
+{\ *\ }{ $*$ }{1}% MULT
+{\ /\ }{ $/$ }{1}% DIV
+{~}{$!$}{1}% BNOT
+%
+%%%%%%%%%%%%%%%%%%%%%
+%
+%TODO : pas pris en compte
+%%%%%%%%%%%%
+{!}{$!$}{2}% EXCLAM_MARK
+{!!}{\!!\!!\!}{2}% DB_EXCLAM_MARK 
+{?}{$?$}{2}% QUESTION_MARK
+{??}{\!?\!\!?\!}{2}% DB_QUESTION_MARK
+% PIPE
+%
+{:}{$:$}{1}% COLON
+{,}{$,$}{1}% COMMA
+{.}{$.$}{1}% PERIOD
+{;}{$;$}{1}% SEMI_COLON
+{:=}{$:=$}{2}% AFFECTE
+%
+%{--}{$\longmapsto$}{2}% ARROW_START "--"
+%{-->}{$\longmapsto$}{2}% ARROW_END "-->"
+%
+}

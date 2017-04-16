@@ -1,0 +1,325 @@
+\chapter{Test du code Java avec JUnit}
+\label{chap:JUnit}
+
+\section{Mise en place}
+\label{sec:JUnitMiseEnPlace}
+Pour notre travail, nous avons utilisé la version standalone contenant les plugins COSTO et Eclipse, mais également effectué l'installation des différents plugins sur Eclipse Juno car une partie d'entre nous utilisait une distribution Linux. 
+
+Pour pouvoir garder les différentes versions de notre travail ainsi que pour pouvoir mieux travailler en groupe nous avons utilisé un dépôt Git\footnote{\url{https://github.com/E1drad/COSTO}}.
+
+Nous avons travaillé avec la version 4 de la librairie JUnit\footnote{\url{http://junit.org/junit4/}}, et nous avions commencé à travailler avec Mockito\footnote{\url{http://site.mockito.org/}} avant d'en abandonner l'usage car cela nous posait des soucis de version de JRE  et qu'il était plus intéressant et potentiellement plus simple de chercher à faire nos mocks par nous-même.
+
+Notre objectif étant d'établir un test du code généré, nous avons donc créé un nouveau package\footnote{kmelia.autonomousSimplePlatoon.testsM1IR} dans lequel créer nos tests, de manière à ce qu'ils ne disparaissent pas si jamais nous régénérions le test pour une raison ou une autre.
+
+\clearpage
+\section{Processus}
+\label{sec:JUnitProcessus}
+
+Nous nous sommes renseignés sur les pratiques de tests unitaires ainsi que les séries de tests notamment grâce à l'ouvrage Tests Unitaires en Java \cite{testUnit} conseillé par nos enseignants référents.
+
+Pour faire du test unitaire, il faut isoler le composant à tester du système et notamment de ses services requis de manière à pouvoir réellement tester le composant uniquement, et pas toute l'architecture sur laquelle il s'appuie derrière.
+
+Ceci implique de prévoir des mocks pour simuler ces services et n'étudier que le comportement du composant. 
+
+Nous avons commencé dans notre travail par chercher à comprendre les différents appels de services effectués par le système dans l'exemple du PlatoonSystem.\footnote{Dont la mise en place est expliquée ici :\\ \url{http://costo.univ-nantes.fr/application/vehicle-exemple/}}
+
+
+Au tout début nous avions voulu tester le service \textit{computeSpeed} de la classe \textit{SimpleVehicle} mais comme ce service était plutôt compliqué car il nécessite d'autres services pour fonctionner nous avons d'abord testé des services plus simple comme le service \textit{pos} et \textit{goalreached}.
+
+
+
+Cela nous a permis de nous familiariser avec le système des channels du framework. Cependant nous nous sommes vite rendus compte qu'il serait plus simple d'utiliser des mocks pour les channels et nous avons donc créé une classe \textit{TestChannel} qui est un mock qui simule le fonctionnement d'un channel.
+
+
+Nous avons travaillé à la génération de test pour la méthode computeSpeed(). Nous avons utilisé la classe \textit{TestChannel} pour ces tests. Pour les tests sur \textit{computeSpeed} d'un \textit{SimpleVehicle} nous avons assigné un \textit{TestChannel} au service \textit{computeSpeed} du véhicule. ComputeSpeed étant un service nécessitant les services pilotpos et pilotspeed nous avons créé des mocks sur ces services en utilisant \textit{TestChannel}, ce channel fournit aussi une \textit{safeDistance} car computeSpeed en a également besoin. Ensuite il suffit de fournir les valeurs que nous voulons via les mocks puis de récupérer le résultat de computeSpeed() pour faire les tests. 
+
+
+\section{Blocages}
+\label{sec:JUnitBlocages}
+
+L'ensemble de l'architecture du système nous a posé quelques soucis de compréhension lors de nos travaux. 
+
+Nous avons notamment bloqué pendant une longue période sur la compréhension du langage Kmelia, du fonctionnement de COSTO et de la génération du harnais de test par COSTOTest, même si nous n'avions pas besoin d'une compréhension en profondeur de tout le système.
+
+Nous avons également tenté une approche réflexive sur laquelle nous avons rapidement bloqué à cause des channels (voir \ref{subsec:channels})
+
+\begin{lstlisting}[frame=single, caption={exemple de fonction généré},label=fig:isGuardSatisfied]
+public Boolean isGuardSatisfied(String transition) {
+    if (transition==null) 
+        return false;
+    if ("i___i1___1".equals(transition)) 
+        return this.service.guard_i___i1___1();
+    if ("i1___f___2".equals(transition)) 
+        return this.service.guard_i1___f___2();
+    return true;
+}
+\end{lstlisting}
+
+
+\subsection*{Channel}
+    Nous avons eu du mal à comprendre à comment se servir des channels pour appeler les services et recevoir leurs résultats. Notamment comprendre comment fonctionne la fonction \textit{callService()}  qui est la fonction qui permet d'appeler les services via un channel.
+    
+    Par la suite nous avons utilisé une classe qui est un mock de la classe Channel pour pouvoir faire les tests plus facilement.
+
+\clearpage
+
+\section{Code}
+
+\lstset{    
+            language=Java,
+            frame=shadowbox,
+            captionpos=b,
+            columns=flexible,
+            breaklines=true,
+            keywordstyle=\color{blue},
+            stringstyle=\color{red},
+            basicstyle=\ttfamily,
+            numbers=left,
+            numbersep=13pt,
+            numberstyle=\color{gray},
+            identifierstyle=\color{black},
+            escapeinside={(*@}{@*)}
+        }
+
+
+Voici le code de la classe TestChannel que nous a fourni M. Ardourel pour pouvoir faire un mock de channel pour utiliser dans nos tests.
+\begin{lstlisting}[frame=single, caption={TestChannel.java},label=fig:JUnitTestChannel]
+package kmelia.autonomousSimplePlatoon.testsM1IR;
+/**
+ * Classe mock channel fournie par Gilles Ardourel
+ */
+public class TestChannel extends Channel{
+    private Object result;
+    private Object[] callparams;
+    private Map<String,Object[]> mockvalues;
+    public void setCallparams(Object... callparams) {
+    	this.callparams = callparams;
+    }   
+    /**
+     * @param callname name of the required service to mock
+     * @param values results to be returned by the
+     * mocked service
+     */
+    public void addMockValue(String callname, Object...values){
+    	mockvalues.put(callname, values);
+    }    
+    public Object getResult() {
+    	return result;
+    }    
+    public TestChannel(String name, IService client,
+        IService server) {
+    	super(name, client, server);
+    	mockvalues= new HashMap<>();
+    }    
+    public void clearMockValue(){
+    	mockvalues.clear();
+    }    
+    @Override
+    public Object[] receiveMessage(String channel, 
+        String message, Class<?>[] paramtypes,
+        IService orig) {
+    	System.err.println(" the Service wants to "
+    	    + "receive a message, use a mock "+message);
+    	return null;
+    }    
+    @Override
+    public void emitMessage(String channel, String message, 
+        Object[] params, IService orig) {
+    	System.out.println(" the Service emits "+message);
+    }    
+    @Override
+    public void callService(String channel, String message, 
+        Object[] params, IService orig)
+        throws KmlCommunicationException {
+    	System.out.println("the service calls another "
+    	    + "Service "+channel+" "+message);
+    }    
+    @Override
+    public void returnService(String channel, String message, 
+        Object[] params, IService orig) {
+    	System.out.println("the service "+message+" returns "+
+    	    params[0]);
+    	orig.ack(this,0);
+    	result=params[0]; 
+    }    
+    @Override
+    public Object[] receiveServiceCall(String channel, 
+        String message, Class<?>[] paramtypes, IService orig) {
+    	return this.callparams;
+    }    
+    @Override
+    public Object[] receiveServiceReturn(String channel, 
+        String message, Class<?>[] paramtypes, IService orig) {
+    	
+        return mockvalues.get(message);
+    }    
+    @Override
+    public void close(IService source) {
+    	// Overriding to NOP because this channel is one-ended
+    }    
+    @Override
+    public void cut(IService source) {
+    	// Overriding to NOP because this channel is one-ended
+    }
+}
+\end{lstlisting}
+
+\clearpage
+
+A partir de ce TestChannel, cela nous a permis de créer une suite de tests pour tester la méthode computeSpeed(). Pour faciliter la lecture des test à partir du deuxième test, nous avons supprimé les parties qui ne changent pas, le code complet étant disponible sur notre dépôt git. 
+Voici le code :
+
+\begin{lstlisting}[frame=single, caption={TestOnComputeSpeed.java},label=fig:JUnitTestOnComputeSpeed]
+package kmelia.autonomousSimplePlatoon.testsM1IR;
+
+public class TestOnComputeSpeed {
+    /**
+     * Test quand le vehicle est suffisament loin du driver.
+     * @throws InterruptedException
+     * @throws KmlCommunicationException
+     * @throws ServiceException
+     */
+    @Test
+    public void testComputeSpeedOk() 
+        throws InterruptedException,
+        KmlCommunicationException, ServiceException{		
+
+        SimpleVehicle veh = new SimpleVehicle("SimpleVehicle", 
+        new TestOuterContext("test"),"last");
+        int posValue=10;
+        veh.setConfig("conf","last",posValue,0);
+        veh.init();	
+        
+        IProvidedService provServToTest =
+            veh.getProvidedService("computeSpeed");
+            
+        //Create and assign fake test channel 
+        TestChannel testChan = new TestChannel(
+            "TESTCHANN",null,provServToTest);
+        provServToTest.assignChannel(testChan);
+        veh.getRequiredService("pilotpos")
+            .setReqChannel(testChan);
+        veh.getRequiredService("pilotspeed")
+            .setReqChannel(testChan);		
+            
+        //assigning call parameters for Service under test
+        testChan.setCallparams(120);// safeDistance
+        testChan.addMockValue("pilotpos", 420);
+        testChan.addMockValue("pilotspeed", 40);	
+        
+        provServToTest.start();
+        
+        Thread.sleep(1000); 
+        
+        provServToTest.stop(testChan);
+        
+        System.out.println(testChan.getResult());
+        assertEquals(true,
+            (Integer)testChan.getResult()>0);	
+    }	
+	
+    /**
+     * Test quand le vehicle est trop proche du driver
+     * @throws InterruptedException
+     * @throws KmlCommunicationException
+     * @throws ServiceException
+     */
+    @Test
+    public void testComputeSpeedTropProche() 
+        throws InterruptedException, 
+        KmlCommunicationException, ServiceException{	
+            [...]
+        int posValue=10;	
+            [...]
+        testChan.setCallparams(120); // safeDistance
+        testChan.addMockValue("pilotpos", 40);
+        testChan.addMockValue("pilotspeed", 40);	
+            [...]
+        System.out.println(testChan.getResult());
+        assertEquals(true,
+            (Integer)testChan.getResult()==0);
+    }	
+    /**
+     * Test quand le vehicle est devant le driver
+     * @throws InterruptedException
+     * @throws KmlCommunicationException
+     * @throws ServiceException
+     */
+    @Test
+    public void testComputeSpeedDevantDriver() 
+        throws InterruptedException, 
+        KmlCommunicationException, ServiceException{	
+            [...]
+        int posValue=100;	
+            [...]
+        System.out.println(testChan.getResult());
+        assertEquals(true,
+            (Integer)testChan.getResult()==0);
+    }	
+    /**
+     * Test quand le driver va tres vite.
+     * Cela ne doit normalement pas affecter le vehicule
+     * @throws InterruptedException
+     * @throws KmlCommunicationException
+     * @throws ServiceException
+     */
+    @Test
+    public void testComputeSpeedDriverRapide()
+        throws InterruptedException, 
+        KmlCommunicationException, ServiceException{	
+            [...]
+        int posValue=10;
+        veh.setConfig("conf","last",posValue,0);
+        veh.init();	
+            [...]
+        System.out.println(testChan.getResult());
+        assertEquals(true,(Integer)testChan.getResult()>0);
+    }	
+    /**
+     * Test quand la safe distance est negative
+     * @throws InterruptedException
+     * @throws KmlCommunicationException
+     * @throws ServiceException
+     */
+    @Test
+    public void testComputeSpeedNegativeSafeDistance() 
+        throws InterruptedException, 
+        KmlCommunicationException, ServiceException{	
+            [...]
+        int posValue=10;		
+        veh.setConfig("conf","last",posValue,20);
+        veh.init();	
+            [...]
+        testChan.setCallparams(120); //safeDistance
+        testChan.addMockValue("pilotpos", 400);
+        testChan.addMockValue("pilotspeed", 4000);	
+            [...]
+        System.out.println(testChan.getResult());
+        assertEquals(true,(Integer)testChan.getResult()>0);	
+	}	
+    /**
+     * Test quand le vehicule a deja une vitesse
+     * @throws InterruptedException
+     * @throws KmlCommunicationException
+     * @throws ServiceException
+     */
+    @Test
+    public void testComputeSpeedDejaLancer() 
+        throws InterruptedException, 
+        KmlCommunicationException, ServiceException{	
+            [...]
+        int posValue=10;		
+        veh.setConfig("conf","last",posValue,20);
+        veh.init();		
+            [...]
+        //assigning call parameters for Service under test
+        testChan.setCallparams(-1); //safeDistance
+        testChan.addMockValue("pilotpos", 400);
+        testChan.addMockValue("pilotspeed", 4000);	
+            [...]
+        System.out.println(testChan.getResult());
+        assertEquals(true,(Integer)testChan.getResult()>0);
+    }
+}
+
+\end{lstlisting}

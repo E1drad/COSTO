@@ -1,0 +1,215 @@
+\chapter{Kmelia et le framework COSTO}
+\label{chap:KmeliaCOSTO}
+\begin{comment}
+    
+    The main features of Kmelia are:
+    
+    component : a component is a container of services; it is described with a state space constrained by an invariant. A component is designed independently from its environment by setting assumptions such as virtual client components or required service specifications;
+    
+    service: a service describes a functionality; it is more than a simple operation; it has a pre-condition, a post-condition and a behaviour described with a labelled transition system (LTS). Moreover a service may hierarchically give access to other services. The behaviour supports communication interactions, dynamic evolution rules and service composition;
+    
+    assembly of components: an assembly is a set of components linked via their required and provided services with the aim to build effective functionality. Linking components by their services in assemblies establishes a possible bridge to Service Oriented Architectures. The component assemblies are governed by strict service composability rules;
+    
+    composite component: a composite component is a component that encapsulates assemblies or other components; it is subject to encapsulation and promotion policies.
+\end{comment}
+
+
+\section{Contexte}
+\label{sec:contexte}
+    Pour ce travail de recherche, nous avons été amenés à utiliser le framework COSTO ainsi que le langage de modélisation Kmelia, que nous présentons dans cette partie.
+
+    Nous avons choisi de reprendre certains des concepts sur lesquels reposent les travaux que nous avons lu pour pouvoir avoir une trace de l'ensemble des concepts avec lesquels nous avons été amenés à travailler au cours de ce travail et permettre une meilleure compréhension de l'ensemble.
+    
+
+\subsection*{L’équipe AeLos}
+    L'équipe AeLos\footnote{Architectures et Logiciels Sûrs \url{https://ls2n.fr/equipe/AeLoS/}} est une équipe du LS2N\footnote{Laboratoire des Sciences du Numérique de Nantes par lesquels ils sont définis. \url{https://ls2n.fr/}} dirigée par Christian Attiogbé. AeLos travaille sur plusieurs axes de recherche en lien avec le développement de logiciels sûrs et les modèles. 
+\clearpage
+
+\section{Notions de test}
+\label{sec:notionTest}
+
+    Comme l'explique P. André et al. dans \cite{amaretto17} dans le développement dirigé par les modèles, il est important de vérifier que le modèle abstrait est correct pour avoir un résultat le plus sûr possible.   
+    Cette vérification demande une combinaison de techniques de tests car on a un système comprenant des composants basés sur des services requis et des services fournis. Ce système a trois types de propriétés chacune vérifiée par une méthode spécifique : 
+    \begin{itemize}[label=\textbullet, font=\large]
+        \item interaction, vérifiée par model checking, 
+        \item cohérence, vérifiée par theorem proving, 
+        \item conformation du comportement au contrat fonctionnel, vérifiée par model testing spécifique.
+    \end{itemize}
+
+\subsection*{Développement dirigé par les modèles}
+    Le développement dirigé par les modèles (souvent abrégé en MDD, pour Model-driven Development) est un type de développement basé sur une représentation du problème posé avec des méta-modèles et des modèles qui permettent également de décrire la solution que l'on souhaite apporter à ce problème.
+    On utilise souvent un langage de modélisation  pour représenter le problème ainsi que les solutions qu'on y apporte, et un exemple connu est l'UML\footnote{Unified Modeling Language, est un langage de modélisation graphique, permettant la création de diagramme représentant le logiciel ou programme, \url{http://www.uml.org}}. Le langage Kmelia en est un autre exemple, sur lequel nous en parlerons plus en détails dans la section~\ref{sec:KmeliaCOSTOLangage}.
+    
+\subsection*{Vérification et Validation}
+    
+    Dans le cadre du développement de produit, et notamment de produit informatique, on teste la qualité du produit en utilisant à la fois de la vérification et de la validation.
+    
+    La vérification correspond au test de correction d'une phase ou de l'ensemble. On vérifie que le produit fait ce qui est demandé sans bugs ou erreurs de réalisation.
+    
+    La validation quant à elle repose sur la conformité du produit avec ce qui a été demandé par le client, c'est à dire que la réalisation convient aux spécifications et répond aux besoins exprimés.
+    
+\subsection*{Model Checking}
+
+    La vérification de modèles, ou model checking, consiste à tester si les propriétés d'interaction d'un modèle sont satisfaites. 
+   
+
+\subsection*{Model Testing}
+
+    Le test de modèles, ou model testing, consiste à réaliser des tests en boite noire en ce basant sur un modèle abstrait. On vérifie que le code correspond bien au modèle. Le harnais de test que nous aborderons dans la section~\ref{chap:harnais} fonctionne sur ce principe.
+    
+    La démonstration par expérimentation a été faite avec le langage de description de modèle Kmelia et l'outil COSTO, et l'article précise qu'il faut plus de travail et d'amélioration des outils pour avancer, notamment sur la partie de la spécification et de la vérification de la qualité de service. Il faut également de nouveaux éléments de langage pour les contraintes de temps et de ressources, ce qui nécessite des tests des techniques de vérification et validation associées.
+
+\subsection*{Platform Independent Model PIM}
+    
+    C'est le modèle logiciel qui est indépendant de l'implémentation du logiciel (langage, \dots ). Ce terme est fréquemment utiliser dans le contexte d'une approche de l'architecture du logiciel basé sur les modèles. L'idée est de baser l'architecture du logiciel sur son modèle pour la rendre indépendante d'une quelconque plateforme d'implémentation. 
+    
+    Il existe des outils  spécialisés pour ce genre d'approche tels que VIATRA, ATLAS  ou Kmelia (CostoTest).
+
+\subsection*{Component Testing}
+    
+    Ce type de test est utilisé dans les logiciels à composants. Pour s'assurer de la correction du logiciel il est nécessaire de s'assurer de la fiabilité de chacun de ses composants de manière individuelle. 
+    
+    Ce genre de test se concentre sur un composant à la fois ce qui nécessite dans la plus part des cas de créer des mocks pour simuler les autres composants que le composant sous test requiert pour fonctionner.
+
+\section{Langage Kmelia}
+\label{sec:KmeliaCOSTOLangage}
+
+\begin{comment}
+    language to describe a component model based on the description of complex services. Kmelia components are abstract, independent from their environment and therefore non-executable.
+    Kmelia can be used to model software architectures and their properties, these models being later refined to execution platforms. It can also be used as a common model for studying component or service model properties (abstraction, interoperability, composability). Kmelia main characteristics are: components, services, software architectures, protocols, contracts, specification of complex interaction between services.
+    
+    Kmelia est un langage à composants multi-services. On distingue les services offerts qui réalisent des fonctionnalités et les services requis qui déclarent les besoins du composant. Ce langage permet de modéliser des composants logiciels, des architectures logicielles par assemblage avec leurs propriétés, afin de permettre une bonne lisibilité, flexibilité et une bonne traçabilité dans la conception des architectures. Kmelia répond aux besoins suivants :
+    Une réelle réutilisation des composants.
+    Un modèle indépendant des plateformes d’exécution.
+    Un langage de spécification de composants, de services et de leur assemblage.
+    Un cadre de développement de composants afin d’élaborer des composants corrects par construction et raisonner sur des assemblages des composants.
+    Les analyses de propriétés des spécifications Kmelia sont mises en œuvre dans la plateforme d’expérimentation ouverte Costo, sous forme d’un ensemble de plugins Eclipse.
+
+
+\end{comment}
+
+    Le langage Kmelia\cite{Kmelia} est un langage de modélisation développé par l'équipe AeLoS, qui permet de décrire des modèles de composants basés sur des services eux-mêmes décrits par Kmelia. Les composants ainsi créés par Kmelia sont indépendant de l'environnement d'exécution et donc non exécutables, ce qui permet de s'affranchir de la contrainte de la plate-forme sur laquelle le programme sera exécuté. 
+
+    Ce langage permet de spécifier les services requis par un composant ainsi que ceux qu'il fournit. Ceci permet de modéliser des systèmes complexes en garantissant autant que possible une bonne lisibilité de la conception et une  indépendance de la plateforme d'exécution, ce qui permet également d'avoir des composants réutilisables et de faire de l'assemblage de composants.
+
+    La génération de code et l'analyse de ses spécifications ont été mises en oeuvre dans la plateforme COSTO, sous forme de plugins Eclipse.
+
+\begin{lstlisting}[frame=single, caption={Exemple de fichier Kmelia décrivant un composant},label=fig:KmeliaVehicleTester]
+COMPONENT VehicleTester
+INTERFACE  
+  provides : {testcase1}
+  requires : {computeSpeed} 
+  autorun: {testcase1}
+USES {PLATOONTESTLIB,PLATOONLIB,DEFAULT} 
+VARIABLES    
+  obs verdict: Boolean ;
+SERVICES
+
+provided testcase1 ()
+Interface
+  extrequires: {computeSpeed}   
+Variables
+computespeedresult : Integer;
+Sequence
+{   
+ # init sequence
+ # call
+  computespeedresult:= (*@ \text{!!} @*)computeSpeed(getData("safeDistance"));
+  # oracle evaluation
+  verdict:= (computespeedresult = getData("oracledata"));
+  # transmit verdict
+  assertT(verdict);
+  #end of service
+  SendResult()
+  }
+End
+
+required computeSpeed(safeDistance : Integer) : Integer
+End
+END_SERVICES
+
+\end{lstlisting}
+
+On peut constater que le .kcp contient :
+\begin{itemize}[label=\textbullet, font=\large]
+    \item {\scshape component} qui définit le nom du composant,
+    \item {\scshape interface} qui liste les compinterface, les interfaces du composant,
+    \item {\scshape uses} qui liste les complibclause utilisés par le composant,
+    \item {\scshape variables} qui liste les compobservvariablesclause, les variables observables du composant,
+    \item {\scshape services} description des services du composant et de leur fonctionnement,
+    \item provided qui liste les services fournis par le composant,
+    \item Interface  qui liste les servinterface, les interfaces du services,
+    \item Variables qui liste les servvariablesclause, les variables du services
+    \item required qui liste les services nécessaires au fonctionnement du composant,
+\end{itemize}
+
+\clearpage
+\section{Framework COSTO}
+\label{chap:KmeliaOutilDeTestCOSTO}
+    COSTO est un outil qui se présente sous la forme de plugins pour Eclipse permettant notamment de générer du code à partir de fichiers Kmelia.
+
+    Cet ensemble de plugins a été développé pour supporter la spécification et l'analyse des systèmes de composants Kmelia. Il gère les spécifications Kmelia et la vérification des propriétés primaires (analyse syntaxique, vérification de type, analyse statique,...)\cite{rapportM2}.
+
+    COSTO utilise notamment le framework ANTLR\footnote{\url{http://www.antlr.org/about.html}} pour la reconnaissance du langage Kmelia et son interprétation. ANTLR prend en entrée une grammaire formelle définissant un langage et produit le code reconnaissant ce langage.
+
+    Le framework fournit une interface \textit{IService} pour la gestion des services. Pour pouvoir appelé les services le framework fournis aussi des \textit{IChannel}. Les channels appellent et récupère les données renvoyées pour un service donnée. 
+
+    Un composant utilisant le framework a des \textit{IProvidedService} qui sont les services fournis par le composant. Un composant possède aussi des \textit{IRequiredService} qui sont les services nécessaire pour le fonctionnement du composant.
+
+    Il dispose également d'un plugin COSTOTest qui permet de générer des harnais de tests à partir du code qui a été généré par COSTO depuis des fichiers Kmelia. Le plugin permet de faire des tests sur des services précis et peut créer des mocks qu'on lui demande tout seul. 
+
+\clearpage
+\subsection*{Les channels}
+\label{subsec:channels}
+    Le langage Kmelia est un langage qui utilise des \textit{goto}s, ce que le langage Java ne permet pas, à cause de cela le code généré doit imité cette fonctionnalité du langage de modélisation et donc crée des classes \textit{{\bfseries nom-classe}LTS} comme : 
+    \begin{itemize}[label=\textbullet, font=\large]
+        \item SimpleDriver\_{}giveSafeDistance
+        \item SimpleDriver\_{}giveSafeDistanceLTS
+    \end{itemize}
+    La première contenant la second et l'initialisant comme ceci :
+    
+\lstset{    
+            language=Java,
+            frame=shadowbox,
+            captionpos=b,
+            columns=flexible,
+            breaklines=true,
+            keywordstyle=\color{blue},
+            stringstyle=\color{red},
+            basicstyle=\ttfamily,
+            numbers=left,
+            numbersep=13pt,
+            numberstyle=\color{gray},
+            identifierstyle=\color{black},
+            escapeinside={(*@}{@*)}
+        }
+
+\begin{lstlisting}[frame=single, caption={Initialisation d'un LTS},label=fig:initLTS]
+    public void initLTS(){
+        (*@ \text{{\bfseries nom-classe}LTS} @*) lts =
+            new (*@ \text{{\bfseries nom-classe}LTS} @*)();
+        this.setLTS(lts);
+        lts.setService(this);
+        lts.init();
+    }
+\end{lstlisting}
+
+\subsection*{La fonction callService()}
+    %		serv.callService("_goalreached", "goalreached",new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")}, serv);
+
+CallService est une fonction de l'interface IService qui appelle un Service en prenant les paramètres suivant : 
+    \begin{itemize}[label=\textbullet, font=\large]
+        \item le nom du channel, il est normalement sous la forme \_{}{\bfseries nom-du-service}
+        \item le nom du service,
+        \item les paramètres d'on le service a besoin. Attention ceux-ci ne sont pas les services requis,
+        \item le service sur le quel on appelle la fonction ,
+    \end{itemize}
+Vous pourrez retrouver en annexe le diagramme de séquence de la fonction callService~\ref{annexe:callServiceSeq} et de callService avec le mock testChannel~\ref{annexe:callServiceSeqMock}.
+
+\begin{lstlisting}[frame=single, caption={Initialisation d'un LTS},label=fig:initLTS]
+IProvidedService serv = driv.getProvidedService("pos");
+	
+serv.callService("_pos", "pos",
+  new Object[]{mylib.PlatoonTestlibMap.getData("safeDistance")},
+  serv);
+\end{lstlisting}

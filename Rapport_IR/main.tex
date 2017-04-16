@@ -1,0 +1,95 @@
+%\documentclass[a4paper,11pt,twoside,final]{book}
+\documentclass[a4paper,11pt,final]{report}
+%\documentclass[a4paper,11pt,final]{article}
+% Pour une impression recto verso, utilisez plutôt ce documentclass :
+%\documentclass[a4paper,11pt,twoside,final]{article}
+
+\usepackage[english,francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[french]{varioref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{comment}
+\usepackage[nottoc]{tocbibind}
+\usepackage{Kmelia}
+\usepackage{enumitem}
+
+\renewcommand{\lstlistingname}{Algorithme}% Listing -> Algorithm
+\newcommand{\reporttitle}{Faut-il tester le modèle ou le code des composants ?}     % Titre
+\newcommand{\reportauthor}{Montalvo \textsc{Araya}, Charles-Eric \textsc{Bégaudeau} et Charlène \textsc{Servantie}} % Auteur
+\newcommand{\reportsubject}{X8II031\\M1 ALMA\\ 2016-2017} % Sujet
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\setlength{\parskip}{1ex} % Espace entre les paragraphes
+
+\setcounter{secnumdepth}{0}
+
+\hypersetup{
+    pdftitle={\reporttitle},%
+    pdfauthor={\reportauthor},%
+    pdfsubject={\reportsubject},%
+    pdfkeywords={rapport} {projet} {web semantique}
+}
+
+\lstset{    
+            language=Kmelia,
+            frame=shadowbox,
+            captionpos=b,
+            columns=flexible,
+            breaklines=true,
+            keywordstyle=\color{blue},
+            stringstyle=\color{red},
+            basicstyle=\ttfamily,
+            numbers=left,
+            numbersep=13pt,
+            numberstyle=\color{gray},
+            identifierstyle=\color{black},
+            escapeinside={(*@}{@*)}
+        }
+
+
+
+\begin{document}
+  \include{title}
+  \cleardoublepage 
+  \include{remerciements}
+  \tableofcontents 
+  \sloppy         
+  \input{intro}
+  \clearpage
+  %modèle kmelia
+  \input{kmelia}
+  %\clearpage
+  %générateur de harnais de test pour le model testing
+  \input{harnais}
+  %\clearpage
+  %test java JUnit focus sur processus + méthodologie
+  \input{junit}
+  %\clearpage
+  %comparaison model testing/ testing junit
+  \input{comparaison}
+  %\clearpage
+  %mutations / autre exemple, autre service
+  \input{mutation}
+  \input{travail}
+  %\clearpage
+  %conclusion
+  \input{conc}
+  
+  \bibliographystyle{unsrt}
+  \bibliography{source}
+  
+  \input{annexes}
+
+
+%\addcontentsline{toc}{chapter}{Références}
+%\bibliography{sample}
+\end{document}
+

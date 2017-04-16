@@ -1,0 +1,139 @@
+%
+% Style LaTeX Listings pour Kmelia 
+%
+% First author : Arnaud Lanoix
+% Modified by :
+%
+
+
+\RequirePackage{listings}
+\RequirePackage{amssymb}
+\RequirePackage{color}
+
+\definecolor{gris25}{gray}{0.75}
+
+\lstdefinelanguage{Kmelia}
+{
+morekeywords=[1]{%%%%%%%%%%% Composant
+COMPONENT,
+INTERFACE,
+USES,
+TYPES,
+CONSTANTS,
+VARIABLES,
+INVARIANT,
+PROPERTIES,
+SERVICE_PROPERTIES,
+INITIALIZATION,
+SERVICES,END_SERVICES,
+COMPOSITION},
+%
+morekeywords=[2]{%%%%%%%%%%% Declaration des interfaces
+provides,requires},
+%
+morekeywords=[2]{%%%%%%%%%%% Detail d'un service
+provided,required,
+external,
+Interface,
+Properties,
+Context_variables,Context_initialization,Context_invariant,
+Pre,
+Constants,Variables,Initialization,
+Behavior,Behaviour,
+Post,
+end},
+%
+%%
+%%%
+keywordstyle=[2]{\itshape \textbf},%
+%%%
+%%
+%
+morekeywords=[3]{%%%%%%%%%% Detail de l'interface d'un service
+subprovides,calrequires,extrequires,intrequires,
+receptions,sendings},
+%
+morekeywords=[3]{%%%%%%%%% Detail declaration de variables/constantes
+obs,from},
+%
+morekeywords=[3]{%%%%%%%%% Detail declaration de types
+struct,array,enum,range,setOf},
+%
+morekeywords=[3]{%%%%%%%%%% Detail declaration Behavior/LTS
+init,final,_SELF,_CALLER},
+%
+morekeywords=[3]{%%%%%%%%%% Detail expressions
+if,then,else,fi},
+%
+%%
+%%%
+keywordstyle=[3]{\itshape \textbf},%
+%%%
+%%
+%
+%%%%%%%%%%%%%%%%%% COMMENTAIRES
+commentstyle={\itshape \color{gris25}},%
+morecomment=[l]{\#},% 
+morecomment=[l]{//},% 
+morecomment=[s]{/*}{*/},%
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%
+keepspaces=true, 
+literate=%
+%
+{(}{$($}{1}% PAR_START
+{)}{$)$}{1}% PAR_END
+%{{}{$\{$}2% BLOCK_START %%%%%%%% A creuser un peu....
+%{}}{$\}$}2% BLOCK_END
+%{[}{$\[$}2% BRACKET_START
+%{]}{$\]$}2% BRACKET_END
+%
+%{BOOL}{$\mathbb{B}$}{1}% BOOL
+% TRUE "true"
+% FALSE "false"
+%
+%{INT}{$\mathbb{Z}$}{1}% INT
+%
+{implies}{$\Rightarrow$}{2}% "implies"
+{equiv}{$\Leftrightarrow$}{2}% "equiv"
+% "xor"
+{||}{$\lor$}{1}% LOR
+%%%%%%%%%%%%%%%%%%%%%%%%{or}{$\lor$}2% "or"   %%%%%%% remplace les "or" dans les mots
+{&&}{$\land$}{1}% LAND
+%%%%%%%%%%%%%%%%%%%%%%%%{and}{$\land$}2% "and"
+{<>}{$\ne$}{1}% DIFF
+{!=}{$\ne$}{1}% "!="
+{<}{$<$}{1}% "<"
+{>}{$>$}{1}% ">"
+{<=}{$\leq$}{1}% LE 
+{>=}{$\geq$}{1}% GE
+{=}{$=$}{1}% EQUAL
+% "in"
+{+}{$+$}{1}% PLUS
+{-}{$-$}{1}% MINUS
+{\ *\ }{ $\times$ }{1}% MULT
+{\ /\ }{ $/$ }{1}% DIV
+{~}{$\lnot$}{1}% BNOT
+%{!}{$\lnot$}{1}% LNOT
+%%%%%%%%%%%%%%%%%%%%%{not}{$\lnot$}1% "not"
+{forall}{$\forall$}{1}% "forall"
+{exists}{$\exists$}{1}% "exists"
+%
+{!!}{$!!$}{2}% DB_EXCLAM_MARK
+{!}{$!$}{2}% EXCLAM_MARK
+{??}{$??$}{2}% DB_QUESTION_MARK
+{?}{$?$}{2}% QUESTION_MARK
+% PIPE
+%
+{:}{$:$}{1}% COLON
+{,}{$,$}{1}% COMMA
+{.}{$.$}{1}% PERIOD
+{;}{$;$}{1}% SEMI_COLON
+{:=}{$:=$}{2}% AFFECTE
+%
+{--}{$\longmapsto$}{2}% ARROW_START "--"
+{-->}{$\longmapsto$}{2}% ARROW_END "-->"
+%
+}
